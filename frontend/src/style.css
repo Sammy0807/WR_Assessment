@@ -1,0 +1,76 @@
+.welcome-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Use full viewport height */
+  }
+  
+  .welcome-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Spacing between form items */
+  }
+  .button-group {
+    display: flex;
+    gap: 10px;
+  }  
+  .welcome-layout {
+    display: flex;
+    align-items:center; /* Aligns items to the top */
+    padding: 20px;
+    gap: 50px; /* Adjust gap to your preference */
+  }
+  
+  .divider {
+    height: auto; /* Adjust height as needed */
+    margin: 0 20px; /* Spacing around the divider */
+  }
+  
+  .game-list {
+    width: 200px; /* Adjust width to your preference */
+    overflow: scroll;
+    max-height: calc(100vh - 250px);
+  }
+
+  .game-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Fill the height of the viewport */
+  }
+  
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px); /* Creates 3 columns */
+    grid-template-rows: repeat(3, 100px); /* Creates 3 rows */
+    gap: 10px; /* Space between the squares */
+    justify-content: center;
+    align-content: center;
+  }
+  
+  .square {
+    width: 100px; /* Width of each square */
+    height: 100px; /* Height of each square */
+    font-size: 2rem; /* Makes X and O bigger */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .scoreboard {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px; /* Space between the scores */
+  }
+  
+  /* Continue with the rest of your styles */
+  
+  .rankings {
+    margin: 0 auto; /* Center the rankings */
+    width: 60%;
+  }
