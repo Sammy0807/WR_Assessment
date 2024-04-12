@@ -1,10 +1,8 @@
 import { render, renderHook } from "@testing-library/react"
-import { useContext } from "react"
 import { SocketContext } from "../context/SocketContext"
 import { AppContext } from "../context/AppContext"
 import { GameContext } from "../context/GameContext"
 import { WelcomeContext } from "../context/WelcomeContext"
-import { useRejoinFormHandlers } from "../hooks/useRejoinForm"
 
 export const mockSocketValues = {
     game: { id: 'game123', winner: null, state: JSON.stringify(Array(9).fill(null)), is_tie: false, status: "in_progress", x_player: "player1", o_player: "player2", x_score: 0, o_score: 0 },

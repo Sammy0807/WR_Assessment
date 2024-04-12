@@ -1,4 +1,3 @@
-// db.js
 
 const { Pool } = require('pg');
 const { databaseURL } = require('../config');
@@ -28,14 +27,11 @@ CREATE TABLE IF NOT EXISTS games (
 const initializeDB = async () => {
   try {
     await pool.query(createGameTableSQL);
-    console.log('Initialized games table successfully.');
   } catch (error) {
-    console.error('Failed to initialize games table:', error);
-    process.exit(1); // Exit the process with an error code
+    process.exit(1);
   }
 };
 
-// Call the function to initialize the DB on startup
 initializeDB();
 
 // Function to create a new game in the database
@@ -49,7 +45,6 @@ const createGame = async (game) => {
       );
       return result.rows[0].id; // Return the new game ID
     } catch (err) {
-      console.error(err)
       throw new Error('Error creating the game in the database');
     }
   };
@@ -110,10 +105,8 @@ LIMIT 5
 };
 
 const deleteAllGame = async () => {
-  console.log('>>>>>')
-  const result = await pool.query('DELETE FROM games');
-  console.log(result,'result')
-  return result.rows; 
+  await pool.query('DELETE FROM games');
+  return []; 
 };
 
 module.exports = {

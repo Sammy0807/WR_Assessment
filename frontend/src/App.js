@@ -5,7 +5,6 @@ import {WelcomePage} from './components/WelcomePage/WelcomePage';
 import {Rankings} from './components/Rankings/Rankings';
 import { AppProvider } from './context/AppContext';
 import { SocketProvider } from './context/SocketContext';
-import { GameProvider } from './context/GameContext';
 import { GamePage } from './components/GamePage/GamePage';
 import { RejoinPage } from './components/RejoinPage/RejoinPage';
 

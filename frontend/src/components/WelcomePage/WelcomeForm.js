@@ -2,7 +2,6 @@ import React from 'react';
 import { Input, Button, Form } from 'antd';
 import { useFormHandlers } from '../../hooks/useFormHandlers';
 import { useWelcome } from '../../context/WelcomeContext';
-import { useNavigate } from 'react-router-dom'; 
 
 export const WelcomeForm = () => {
     const {

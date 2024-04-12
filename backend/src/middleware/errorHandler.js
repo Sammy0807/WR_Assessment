@@ -1,4 +1,3 @@
-// errorHandler.js
 const errorHandler = (err, req, res, next) => {
     // Log the error, for example using Winston (production level logging would need more details)
     console.error(err.stack);

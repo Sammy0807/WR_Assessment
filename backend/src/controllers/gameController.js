@@ -15,16 +15,14 @@ const createNewGame = async (req, res) => {
     const gameId = await db.createGame(newGame); // Stub function for DB operation
     res.status(201).json({ gameId: gameId, message: 'New game created successfully' });
   } catch (err) {
-    console.error(err)
     res.status(500).json({ message: 'Error creating new game' });
   }
 };
 
 // Make a move in a game
 const makeMove = async (req, res) => {
-  const gameId = req.params.id; // Extract the game ID from the URL parameter
-  const { playerId, position } = req.body; // Extract the playerId and position from the request body
-  console.log('make move>>>>')
+  const gameId = req.params.id; 
+  const { playerId, position } = req.body; 
   try {
     // Retrieve the game from the database using the gameId
     const gameData = await db.getGameById(gameId);
@@ -36,6 +34,10 @@ const makeMove = async (req, res) => {
     const game = new Game();
     game.loadFromState(gameData);
 
+    if (game.currentTurn !== (playerId === game.xPlayer ? 'X' : 'O')) {
+      return res.status(400).json({ message: "Not your turn" });
+    }
+
     // Attempt to make the move
     const moveResult = game.makeMove(position, playerId);
     
@@ -44,14 +46,13 @@ const makeMove = async (req, res) => {
       await db.updateGameState(game.serializeForDatabase());
       return res.status(200).json({
         message: moveResult.message,
-        game: game.serializeForDatabase() // Serialize the game state to send back to the client
+        game: game.serializeForDatabase()
       });
     } else {
       // If the move was not successful, return a bad request response
       return res.status(400).json({ message: moveResult.message });
     }
   } catch (error) {
-    console.error('Error making move:', error);
     res.status(500).json({ message: 'Error making move' });
   }
 };
@@ -86,7 +87,6 @@ const getTopRankings = async (req, res) => {
     const rankings = await db.getTopRankings(); // Stub function for DB operation
     res.status(200).json({ rankings });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: 'Error retrieving rankings' });
   }
 };
@@ -109,18 +109,16 @@ const getGameById = async (req, res) => {
     res.status(500).json({ message: 'Error retrieving game' });
   }
 };
+
 const deleteAllGames = async (req, res) => {
   try {
-    const game = await db.deleteAllGame(); 
-    res.status(200).json({ game });
+    await db.deleteAllGame();
+    res.status(200).json({ message: 'All games deleted successfully.' });
   } catch (err) {
-    res.status(500).json({ message: err });
+    console.error(err);
+    res.status(500).json({ message: 'Database error' });
   }
 };
-
-// Helper functions to interact with the database would go here
-// ...
-
 module.exports = {
   createNewGame,
   makeMove,

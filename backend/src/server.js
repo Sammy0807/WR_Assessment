@@ -12,8 +12,6 @@ const Game = require('./models/Game');
 
 io.on('connection', (socket) => {
   const gameId = socket.handshake.query.gameId;
-  console.log(gameId, 'gameId')
-  console.log("connected");
 
   gameId && socket.join(gameId.toString());
 
@@ -23,7 +21,6 @@ io.on('connection', (socket) => {
       const gameData = await db.getGameById(gameId);
 
       if (!gameData) {
-        console.log("NO DATA")
         return
       }
 
@@ -57,9 +54,7 @@ io.on('connection', (socket) => {
           ...game.serializeForDatabase()
         }
       });
-      console.log(`user ${userName} joined`)
     } catch (error) {
-      console.error(error);
       socket.emit("error", {
         message: "an error occured"
       })
@@ -101,7 +96,6 @@ io.on('connection', (socket) => {
         });
       }
     } catch (error) {
-      console.error(error);
       socket.emit("error", {
         message: "an error occured"
       })
@@ -109,7 +103,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on("resetGame", async (gameId) => {
-    console.log('backend reset games >>>>')
     try {
       const gameData = await db.getGameById(gameId);
       if (!gameData) {
@@ -132,7 +125,6 @@ io.on('connection', (socket) => {
       });
 
     } catch (error) {
-      console.error(error);
       socket.emit("error", {
         message: "an error occured"
       })
@@ -160,7 +152,6 @@ io.on('connection', (socket) => {
       });
 
     } catch (error) {
-      console.error(error);
       socket.emit("error", {
         message: "an error occured"
       })
@@ -197,7 +188,6 @@ io.on('connection', (socket) => {
         });
       }
     } catch (error) {
-      console.error(error);
       socket.emit("error", {
         message: "an error occured"
       })
