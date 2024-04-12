@@ -51,36 +51,40 @@ describe('createNewGame', () => {
   });
 
   describe('makeMove', () => {
-    it.skip('should handle a valid move correctly', async () => {
+    it('should handle a valid move correctly', async () => {
         const req = {
           params: { id: '1' },
           body: { playerId: 'player1', position: 0 }
         };
         const res = mockResponse();
+    
         const gameData = {
           state: JSON.stringify(Array(9).fill(null)),
           x_player: 'player1',
           o_player: 'player2',
           player_turn: 'X',
-        };
-    
-        // Setting the game to match the turn and ensure the move is valid
+        };    
         db.getGameById.mockResolvedValue(gameData);
         const mockGameInstance = {
           loadFromState: jest.fn(),
           makeMove: jest.fn().mockReturnValue({ valid: true, message: 'Move made' }),
-          serializeForDatabase: jest.fn().mockReturnValue({ some: 'state' })
+          serializeForDatabase: jest.fn().mockReturnValue({ some: 'state' }),
+          currentTurn: 'X' 
         };
+    
         Game.mockImplementation(() => mockGameInstance);
+    
+        mockGameInstance.loadFromState(gameData);
     
         await gameController.makeMove(req, res);
     
+        // Assertions to verify if the method behaves as expected
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
           message: 'Move made',
           game: mockGameInstance.serializeForDatabase()
         });
-    });    
+      });
    
     it('should return 404 if game not found', async () => {
       const req = mockRequest({}, { playerId: 'player1', position: 1 });
@@ -196,12 +200,24 @@ describe('createNewGame', () => {
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith({ game: gameData });
     });
+
+    it('should return 404 if no game is found', async () => {
+        const req = mockRequest({}, {});
+        req.params.id = '123'; // Assuming this ID does not exist
+        const res = mockResponse();
+        db.getGameById.mockResolvedValue(null);  // Simulate no game found
+      
+        await gameController.getGameById(req, res);
+      
+        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.json).toHaveBeenCalledWith({ message: 'Game not found' });
+    });      
   
-    it.skip('should return 500 if no game is found', async () => {
+    it('should return 500 on database error', async () => {
       const req = mockRequest({}, {});
       req.params.id = '123';
       const res = mockResponse();
-      db.getGameById.mockResolvedValue(new Error('Game not found'));
+      db.getGameById.mockRejectedValue(new Error('Database error'));
   
       await gameController.getGameById(req, res);
   
@@ -231,6 +247,4 @@ describe('createNewGame', () => {
       expect(res.json).toHaveBeenCalledWith({ message: 'Database error' });
     });
   });
-  
-  
-  
+    
