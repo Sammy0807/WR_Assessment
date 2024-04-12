@@ -1,15 +1,15 @@
 
-```markdown
 # WR_Assessment Application
 
 ## Introduction
-This application is designed to facilitate [short description of your app’s purpose]. It's intuitive and easy to use for managing [specific features].
+Welcome to the WR_Assessment tic-tac-toe game! Embark on a classic gaming adventure where strategy meets fun. Whether you're in the mood for a quick match with a friend or aiming to climb the ranks in our leaderboard, our app is designed to deliver a seamless and engaging tic-tac-toe experience. Enjoy the nostalgia of this beloved game brought to life with a modern twist!
 
 ## Features
-- Feature 1: [description]
-- Feature 2: [description]
-- Feature 3: [description]
-- More features...
+- **Interactive Gameplay**: Start, join, and play tic-tac-toe games in real-time.
+- **Live Notifications**: Stay informed with in-game notifications and updates.
+- **Pause and Resume**: Freedom to leave a game and come back to finish it later.
+- **Ranking System**: Track your wins and climb the leaderboard to become the ultimate champion.
+- **Responsive Design**: Play effortlessly from any device, thanks to a user-friendly interface.
 
 ## Quick Start
 
@@ -55,7 +55,7 @@ To start the server, use:
 
 ```bash
 # Start the backend server
-npm start
+npm run dev
 ```
 
 Navigate to the frontend directory to start the React app:
@@ -77,17 +77,4 @@ npm test
 # Testing the frontend
 cd ../frontend
 npm test
-```
-
-## Additional Information
-
-- [Contribution guidelines](CONTRIBUTING.md)
-- [Versioning](https://semver.org/)
-- [Authors](https://github.com/Sammy0807/WR_Assessment/contributors)
-- [License (MIT)](LICENSE.md)
-
-## Acknowledgments
-- All contributors and supporters of the WR_Assessment project.
-```
-
-This template is ready to be copied into your `README.md` file. Make sure to replace the placeholders and add any additional instructions specific to your project.
+``` 
