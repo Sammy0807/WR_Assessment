@@ -1,5 +1,5 @@
 
-# WR_Assessment Application
+# Wise Rock Assessment Application
 
 ## Introduction
 Welcome to the WR_Assessment tic-tac-toe game! Embark on a classic gaming adventure where strategy meets fun. Whether you're in the mood for a quick match with a friend or aiming to climb the ranks in our leaderboard, our app is designed to deliver a seamless and engaging tic-tac-toe experience. Enjoy the nostalgia of this beloved game brought to life with a modern twist!
