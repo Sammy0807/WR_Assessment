@@ -14,8 +14,8 @@ Welcome to the WR_Assessment tic-tac-toe game! Embark on a classic gaming advent
 ## Quick Start
 
 ### Prerequisites
-- Node.js
-- npm
+- Node.js v20.12.1
+- npm 10.5.0
 - PostgreSQL
 
 ### Setup
@@ -29,7 +29,7 @@ git clone https://github.com/Sammy0807/WR_Assessment.git
 cd WR_Assessment
 # Install frontend dependencies
 cd frontend
-npm install
+npm install --legacy-peer-deps
 # Install backend dependencies
 cd ../backend
 npm install
