@@ -12,6 +12,7 @@ class Game {
       this.xScore = 0;
       this.oScore = 0;
       this.status = "pending"; // [pending, in_progress, completed]
+      this.isTie = false;
     }
   
     // Add player to the game
@@ -91,6 +92,7 @@ class Game {
     // Check for a tie (if all cells are filled and there's no winner)
     checkForTie() {
       if (this.board.every(position => position !== null) && !this.winner) {
+        this.isTie = true;
         this.isGameOver = true;
       }
     }
@@ -101,6 +103,7 @@ class Game {
       this.currentTurn = 'X';
       this.winner = null;
       this.isGameOver = false;
+      this.isTie = false;
     }
 
     endGame() {
@@ -127,7 +130,7 @@ class Game {
           o_score: this.oScore,
           winner: this.winner,
           status: this.status,
-          // Add other game properties to serialize as needed
+          is_tie: this.isTie,
         };
       }
 
@@ -148,6 +151,7 @@ class Game {
         this.oScore = gameData.o_score;
         this.name = gameData.game_name;
         this.status = gameData.status;
+        this.isTie = gameData.is_tie;
         
         // // Assuming the players are stored in a JSON string in the database
         // if (gameData.players && typeof gameData.players === 'string') {

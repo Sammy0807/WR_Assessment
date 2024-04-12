@@ -3,16 +3,15 @@ import { useApp } from './AppContext';
 import { useSocket } from './SocketContext';
 import { useApi } from '../hooks/useApi';
 import { router } from '../App';
-import { useParams } from 'react-router-dom';
 
-const GameContext = createContext();
+export const GameContext = createContext();
 
 export const useGame = () => useContext(GameContext);
 
 export const GameProvider = ({ children }) => {
     const { playerName, messageApi } = useApp();
     const { getGameById } = useApi();
-    const { game, setGame, resetGame, endGame, makeMove } = useSocket();
+    const { game, setGame, resetGame, endGame, makeMove, resettingGame } = useSocket();
     const [board, setBoard] = useState(Array(9).fill(null));
 
     const gameId = router.state.matches[0].params?.id
@@ -45,7 +44,7 @@ export const GameProvider = ({ children }) => {
     }, [game])
 
     useEffect(() => {
-        if (game?.winner) {
+        if (game?.winner && !resettingGame) {
             const winner = game.winner === "X" ? game.x_player : game.o_player
             setTimeout(() => { resetGame(game.id) }, 5000)
             messageApi.open({
@@ -55,6 +54,17 @@ export const GameProvider = ({ children }) => {
             });
         }
     }, [game?.winner, game?.id, messageApi, resetGame])
+
+    useEffect(() => {
+        if (game?.is_tie && !resettingGame) {
+            setTimeout(() => { resetGame(game.id) }, 5000)
+            messageApi.open({
+                type: 'success',
+                content: `GAME TIED: Reseting the game in 5 seconds...`,
+                duration: 5,
+            });
+        }
+    }, [game?.is_tie, game?.id, messageApi, resetGame])
 
     useEffect(() => {
         if (game?.state) {

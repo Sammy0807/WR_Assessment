@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import { message } from 'antd'
 
-const AppContext = createContext();
+export const AppContext = createContext();
 
 export const useApp = () => useContext(AppContext);
 

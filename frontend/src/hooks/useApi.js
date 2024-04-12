@@ -1,11 +1,11 @@
 import { router } from "../App";
 import { useApp } from "../context/AppContext";
+import { baseUrl } from "../utils/constants";
 
 
 export const useApi = () => { 
     const { messageApi } = useApp()
-    const baseUrl = 'http://localhost:4100/api';
-
+    ;
     const getGames = async () => {
         try {
             const response = await fetch(`${baseUrl}/games`);

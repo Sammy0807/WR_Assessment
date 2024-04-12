@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS games (
   x_score INT NOT NULL,
   o_score INT NOT NULL,
   is_game_over BOOLEAN NOT NULL DEFAULT FALSE,
-  status TEXT NOT NULL
+  status TEXT NOT NULL,
+  is_tie BOOLEAN NOT NULL DEFAULT FALSE
 );
 `;
 
@@ -43,8 +44,8 @@ const createGame = async (game) => {
       // Serialize the game state
       const gameState = game.serializeForDatabase();
       const result = await pool.query(
-        'INSERT INTO games (state, player_turn, is_game_over, game_name, x_player, o_player, winner, x_score, o_score, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id',
-        [gameState.state, gameState.player_turn, gameState.is_game_over, gameState.game_name, gameState.x_player, gameState.o_player, gameState.winner, gameState.x_score, gameState.o_score, gameState.status]
+        'INSERT INTO games (state, player_turn, is_game_over, game_name, x_player, o_player, winner, x_score, o_score, status, is_tie) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id',
+        [gameState.state, gameState.player_turn, gameState.is_game_over, gameState.game_name, gameState.x_player, gameState.o_player, gameState.winner, gameState.x_score, gameState.o_score, gameState.status, gameState.is_tie]
       );
       return result.rows[0].id; // Return the new game ID
     } catch (err) {
@@ -77,7 +78,7 @@ const getGameById = async (gameId) => {
 const updateGameState = async (id, game) => {
   const gameState = game.serializeForDatabase();
   // Implement the logic to update the game state
-  await pool.query('UPDATE games SET state = $1, player_turn = $2, is_game_over = $3, game_name = $4, x_player = $5, o_player = $6, winner = $7, x_score = $8, o_score = $9, status = $10 WHERE id = $11', [gameState.state, gameState.player_turn, gameState.is_game_over, gameState.game_name, gameState.x_player, gameState.o_player, gameState.winner, gameState.x_score, gameState.o_score, gameState.status, id]);
+  await pool.query('UPDATE games SET state = $1, player_turn = $2, is_game_over = $3, game_name = $4, x_player = $5, o_player = $6, winner = $7, x_score = $8, o_score = $9, status = $10, is_tie = $11 WHERE id = $12', [gameState.state, gameState.player_turn, gameState.is_game_over, gameState.game_name, gameState.x_player, gameState.o_player, gameState.winner, gameState.x_score, gameState.o_score, gameState.status, gameState.is_tie, id]);
 };
 
 // Function to get the top player rankings

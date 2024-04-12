@@ -1,27 +1,29 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import { useApp } from './AppContext';
+import { socketUrl } from '../utils/constants';
 
-const SocketContext = createContext();
+export const SocketContext = createContext();
 
 export const useSocket = () => useContext(SocketContext);
 
 export const SocketProvider = ({ children }) => {
     const [socket, setSocket] = useState(null);
     const [game, setGame] = useState(null);
+    const [resettingGame, setResettingGame] = useState(false);  
 
     const { messageApi } = useApp();
 
     useEffect(() => {
-        const newSocket = game?.id ? io('http://localhost:4100', {
+        const newSocket = game?.id ? io(socketUrl, {
             query: {
                 gameId: game.id
             }
-        }) : io('http://localhost:4100')
+        }) : io(socketUrl);
         setSocket(newSocket);
 
         return () => newSocket.close();
-    } ,[game?.id]);
+    },[game?.id]);
 
     useEffect(() => {
         if (socket && game?.id) {
@@ -48,6 +50,7 @@ export const SocketProvider = ({ children }) => {
                         type: 'success',
                         content: data.message,
                     });
+                    setResettingGame(false);
                 }
             });
         
@@ -86,6 +89,7 @@ export const SocketProvider = ({ children }) => {
     }
 
     const resetGame = (gameId) => {
+        setResettingGame(true);
         socket.emit('resetGame', gameId);
     }
 
@@ -103,7 +107,8 @@ export const SocketProvider = ({ children }) => {
             endGame,
             game,
             setGame,
-            rejoinGame
+            rejoinGame,
+            resettingGame, setResettingGame
 
         }}>
             {children}

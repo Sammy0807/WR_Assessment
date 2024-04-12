@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useApi } from '../hooks/useApi'; 
 import { router } from '../App';
 
-const WelcomeContext = createContext();
+export const WelcomeContext = createContext();
 
 export const useWelcome = () => useContext(WelcomeContext);
 
