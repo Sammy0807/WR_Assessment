@@ -10,10 +10,9 @@ app.use(cors());
 
 app.use(express.json());
 app.use(rateLimiter);
-// ... other middleware
 
 app.use('/api', gameRoutes);
 
-app.use(errorHandler); // Keep this as the last middleware
+app.use(errorHandler);
 
 module.exports = app;

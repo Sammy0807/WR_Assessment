@@ -64,7 +64,7 @@ io.on('connection', (socket) => {
   socket.on('makeMove', async (gameId, params) => {
     try {
       // handle the move made by a player
-      const { player, position } = params; // Extract the playerId and position from the request body
+      const { player, position } = params;
 
       // Retrieve the game from the database using the gameId
       const gameData = await db.getGameById(gameId);
