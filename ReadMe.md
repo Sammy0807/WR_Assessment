@@ -49,6 +49,19 @@ echo "PORT=your_preferred_port_number" >> .env
 
 Replace `your_postgress_database_url` with your PostgreSQL database URL and `your_preferred_port_number` with the port number you want the server to use.
 
+### Configure Environment Variables in the Frontend
+
+To ensure that your frontend application can communicate with the backend server, you need to set up an environment variable to define the backend's URL and port. Use the same port number that you used for the backend.
+
+1. Navigate to the `frontend` directory.
+2. Create a `.env` file in the root of the `frontend` folder (if it does not exist).
+3. Add the following line to the `.env` file, replacing `your_preferred_port_number` with the port number you set for the backend server in the backend `.env` file.
+
+```bash
+# In the frontend directory
+echo "REACT_APP_BACKEND_PORT=your_preferred_port_number" > .env
+```
+
 ### Run the Application
 
 To start the server, use:
